@@ -1,3 +1,9 @@
+# Directories
+data/raw/
+
+# Zip
+*.zip
+
 # Version 0 files
 *v0*
 

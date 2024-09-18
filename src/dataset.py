@@ -1,29 +1,53 @@
 import os
-import sys
-from math import sqrt
-
-import dotenv
-import matplotlib.pyplot as plt
-import numpy as np
 import pandas as pd
-import seaborn as sns
-from sklearn.linear_model import LinearRegression
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import mean_squared_error, r2_score
+import matplotlib.pyplot as plt
 
-import utility.plots_cfg as plt_c
-import utility.plots_save as plt_s
 
-dotenv.load_dotenv()
-plt_c.load_cfg()
+def load_data(file_path):
+    """Load the dataset from the given file path."""
+    return pd.read_csv(file_path)
 
-script_dir = os.path.dirname(__file__)
-data_path = os.path.join(script_dir, "../data/raw/daily-bike-share.csv")
 
-df = pd.read_csv(data_path)
+def data_overview(df):
+    """Provide an overview of the dataset including data types, missing values, and visualizations."""
+    # Display the first few rows
+    print("First few rows of the dataset:----------")
+    print(df.head())
 
-X = df[
-    [
+    # Data types for each column
+    print("\nData types for each column:----------")
+    print(df.info())
+
+    # Display the shape of the dataset
+    print("\nShape of the dataset:----------")
+    print(df.shape)
+
+    # Summary statistics for numerical columns
+    print("\nSummary statistics for numerical columns:----------")
+    print(df.describe())
+
+    # Check for missing values
+    print("\nMissing values in each column:----------")
+    print(df.isnull().sum())
+
+    # Check unique values per column
+    print("\nUnique values per column:----------")
+    for col in df.columns:
+        print(f"{col}: {df[col].nunique()} unique values")
+
+    # Correlation matrix (excluding non-numeric columns)
+    print("\nCorrelation matrix:----------")
+    numeric_cols = df.select_dtypes(include=["number"]).columns
+    print(df[numeric_cols].corr())
+
+    # Plot histograms for numerical features
+    print("\nDisplaying histograms for numerical features...")
+    df[numeric_cols].hist(figsize=(12, 10), bins=30)
+    plt.suptitle("Histograms of Numerical Features")
+    plt.show()
+
+    # Convert categorical columns to 'category' dtype
+    categorical_cols = [
         "season",
         "yr",
         "mnth",
@@ -31,44 +55,29 @@ X = df[
         "weekday",
         "workingday",
         "weathersit",
-        "temp",
-        "atemp",
-        "hum",
-        "windspeed",
     ]
-]
+    df[categorical_cols] = df[categorical_cols].astype("category")
 
-y = df["rentals"]
-
-X[["season", "yr", "mnth", "holiday", "weekday", "workingday", "weathersit"]] = X[
-    ["season", "yr", "mnth", "holiday", "weekday", "workingday", "weathersit"]
-].astype("category")
-
-X = pd.get_dummies(
-    X,
-    columns=["season", "yr", "mnth", "holiday", "weekday", "workingday", "weathersit"],
-    dtype=int,
-)
-
-X.info()
-
-X_train, X_test, y_train, y_test = train_test_split(
-    X, y, test_size=0.2, random_state=123
-)
-
-model = LinearRegression()
-
-model.fit(X_train, y_train)
-
-y_pred = model.predict(X_test)
+    # Display value counts for categorical columns
+    print("\nValue counts for categorical columns:----------")
+    categorical_cols = df.select_dtypes(include=["category"]).columns
+    for col in categorical_cols:
+        print(f"Value counts for {col}:")
+        print(df[col].value_counts())
+        print()
 
 
-test_score = model.score(X_test, y_test)
-r2 = r2_score(y_pred, y_test)
-rmse = sqrt(mean_squared_error(y_pred, y_test))
+if __name__ == "__main__":
+    # Define paths and load data
+    script_dir = os.path.dirname(__file__)
+    data_path = os.path.join(script_dir, "../data/raw/daily-bike-share.csv")
 
-print(test_score)
-print(r2)
-print(rmse)
+    df = load_data(data_path)
+    print("############################")
+    print("# Data loaded successfully #")
+    print("############################")
 
-# plt_s.export_figs()
+    data_overview(df)
+    print("##########################")
+    print("# Data overview complete #")
+    print("##########################")

@@ -1,59 +1,54 @@
 # ONGOING PROJECT
 
-> some details in this README are placeholders.
-
 ## Project Summary: Bike Rental Prediction Model
 
 **Objective:**
-To develop a predictive model that forecasts daily bike rental demand based on various factors, including date (month, day, holidays, weekends) and weather data (temperature, precipitation). This model aims to optimize staffing, inventory management, and revenue for bike rental operations.
+To develop a predictive model that forecasts daily bike rental demand based on various factors. This model aims to optimize staffing, inventory management, and revenue for bike rental operations.
 
 **Tools and Technologies Used:**
 
 - **Programming Languages:** Python
 - **Libraries/Frameworks:**
   - **Data Manipulation & Analysis:** Pandas, NumPy
-  - **Data Visualization:** Matplotlib, Seaborn
-  - **Machine Learning:** Scikit-Learn, XGBoost
-  - **Weather Data Integration:** OpenWeatherMap API (or similar)
+  - **Data Visualization:** Matplotlib
+  - **Machine Learning:** Scikit-Learn
   - **Data Preprocessing:** Scikit-Learn, Pandas
+  - **Model Export:** Joblib
   - **Model Evaluation:** Scikit-Learn
-- **Data Storage:** CSV files, SQLite (if applicable)
+- **Data Storage:** CSV files
 - **Version Control:** Git
-- **Development Environment:** Jupyter Notebook, VSCode
+- **Development Environment:** VSCode
 
 **Project Steps:**
 
 1. **Data Collection:**
-   - Gather historical bike rental data.
-   - Collect weather data for corresponding dates.
-   - Compile additional features such as holidays and weekends.
+   - Download the data from the data source:
+      Original Source: <http://capitalbikeshare.com/system-data>
+      Weather Information: <http://www.freemeteo.com>
+      Holiday Schedule: <http://dchr.dc.gov/page/holiday-schedule>
 
-2. **Data Preprocessing:**
-   - Clean and preprocess the bike rental data (handling missing values, outliers, etc.).
-   - Merge weather data with bike rental data.
-   - Feature engineering to create relevant predictors (e.g., encoding categorical variables, creating date-related features).
+      Data Downloaded for Model Development:
+      <https://www.kaggle.com/datasets/marklvl/bike-sharing-dataset?select=hour.csv>
 
-3. **Exploratory Data Analysis (EDA):**
+2. **Exploratory Data Analysis (EDA):**
    - Perform EDA to understand the distribution of bike rentals and the impact of different features.
    - Visualize correlations and trends using Matplotlib and Seaborn.
+   - Identify patterns and relationships between variables.
+   - Identify target variable and features for model development.
 
-4. **Model Development:**
+3. **Model Development:**
    - Split the data into training and testing sets.
-   - Select and train various machine learning models (e.g., Linear Regression, XGBoost).
-   - Tune hyperparameters and evaluate model performance using metrics such as Mean Absolute Error (MAE), Mean Squared Error (MSE), and R-squared.
+   - Train model using RandomForestRegressor model with tuned hyperparameters
+   - Tune hyperparameters and evaluate model performance using metrics such as Mean Squared Error (MSE), and R-squared.
 
-5. **Model Evaluation:**
-   - Compare the performance of different models.
-   - Validate the best-performing model on unseen data to ensure robustness.
+4. **Save Model for Future Use:**
+   - Save the model for future deployment joblib.
 
-6. **Deployment and Integration:**
-   - Prepare the model for deployment (e.g., save model using joblib or pickle).
-   - Integrate the model into the company’s system for real-time prediction (if applicable).
-
-7. **Documentation and Reporting:**
+5. **Documentation and Reporting:**
    - Document the entire process, including data sources, preprocessing steps, model details, and evaluation results.
    - Provide a final report summarizing findings and recommendations for optimizing bike rental operations.
 
-8. **Future Work:**
-   - Explore additional features or data sources to improve model accuracy.
-   - Consider implementing real-time data feeds and automatic model retraining.
+6. **Future Work:**
+   - Create a more up to date data set and use the saved model for predictions.
+   - Experiment with using different models and hyperparameters for for potentially better performance metrics.
+   - Consider testing in a deployment scenario where the model is used to make real-time predictions.

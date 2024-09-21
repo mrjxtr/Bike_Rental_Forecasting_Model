@@ -5,6 +5,10 @@
 **Objective:**
 To develop a predictive model that forecasts daily bike rental demand based on various factors. This model aims to optimize staffing, inventory management, and revenue for bike rental operations.
 
+![](/reports/figures/fig_003_Line_plot_actual_vs_predicted.png)
+
+![](/reports/figures/fig_004_Line_plot_full_actual_vs_predicted.png)
+
 **Tools and Technologies Used:**
 
 - **Programming Languages:** Python

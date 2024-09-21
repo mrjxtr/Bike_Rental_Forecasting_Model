@@ -63,7 +63,7 @@ param_grid = {
 # Initialize the RandomForestRegressor
 rf = RandomForestRegressor(random_state=123)
 
-# Set up Grid Search
+# Set up Grid Search with 5-fold cross-validation
 grid_search = GridSearchCV(
     estimator=rf,
     param_grid=param_grid,
@@ -80,6 +80,7 @@ grid_search.fit(X_train, y_train)
 print("Best Parameters:", grid_search.best_params_)
 print("Best Score:", grid_search.best_score_)
 
+#* Setting hyperparameters manually
 # hyper_params = {
 #     "max_depth": 15,
 #     "min_samples_leaf": 1,
@@ -87,13 +88,13 @@ print("Best Score:", grid_search.best_score_)
 #     "n_estimators": 100,
 # }
 
+#* Training the model with manually set hyperparameters
+# model = RandomForestRegressor(**hyper_params)
+# model.fit(X_train, y_train)
+
 # Use the best model from Grid Search to make predictions
 best_model = grid_search.best_estimator_
-y_pred = best_model.predict(X_test)
-# model = RandomForestRegressor(**hyper_params)
-
 best_model.fit(X_train, y_train)
-# model.fit(X_train, y_train)
 
 y_pred = best_model.predict(X_test)
 
@@ -158,12 +159,15 @@ plt.legend()
 plt.show()
 figures.append((fig4, "Line_plot_full_actual_vs_predicted.png"))
 
+# Path for exporting figures
 script_dir = os.path.dirname(__file__)
 export_dir: str = os.path.join(script_dir, "../reports/figures/")
 
+# Export the figures
 for index, (fig, filename) in enumerate(figures, start=1):
     export_figs(export_dir, fig, index, filename)
 
+# Export the model
 model_path = os.path.join(script_dir, "../models/bike-share.joblib")
 dump(best_model, model_path)
 print(f"Model saved at {model_path}")

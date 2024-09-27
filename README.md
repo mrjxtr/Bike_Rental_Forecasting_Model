@@ -7,6 +7,15 @@ The **Bike Rental Prediction Model** (ONGOING PROJECT) aims to create a model us
 <br />
 
 <div align="center">
+    <a href="reports/figures/fig_003_Line_plot_actual_vs_predicted.png">
+        <img src="reports/figures/fig_003_Line_plot_actual_vs_predicted.png" alt="Dashboard" width="500">
+    </a>
+    
+</div>
+
+<br />
+
+<div align="center">
   
   [![LinkedIn](https://img.shields.io/badge/-LinkedIn-0077B5?style=flat-square&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/mrjxtr)
   [![Upwork](https://img.shields.io/badge/-Upwork-6fda44?style=flat-square&logo=upwork&logoColor=white)](https://www.upwork.com/freelancers/~01f2fd0e74a0c5055a?mp_source=share)

@@ -1,3 +1,13 @@
+"""
+This script demonstrates the use of a RandomForestRegressor model for bike rental prediction.
+It includes data loading, preprocessing, model training, and evaluation.
+
+Note that this script was only for testing purposes and is use to create the notebook in `/notebooks`.
+The final scripts are found in the `src/modeling` folder.
+
+Created some modifications to this script which are not reflected in the final notebook as it was only for testing purposes.
+"""
+
 import os
 
 import matplotlib.pyplot as plt
@@ -11,13 +21,16 @@ from sklearn.model_selection import GridSearchCV, train_test_split
 import utility.plots_cfg as plt_c
 from utility.plots_save import export_figs
 
+# Load the configuration for the plots
 plt_c.load_cfg()
 
+# Loading the data
 script_dir = os.path.dirname(__file__)
 data_path = os.path.join(script_dir, "../data/raw/daily-bike-share.csv")
 
 df = pd.read_csv(data_path)
 
+# Preprocessing the data
 categorical_cols = [
     "season",
     "yr",
@@ -42,6 +55,7 @@ feature_cols = [
 ]
 target = "rentals"
 
+# Preparing the data for the model
 X = df[feature_cols].copy()
 y = df[target]
 
@@ -80,7 +94,7 @@ grid_search.fit(X_train, y_train)
 print("Best Parameters:", grid_search.best_params_)
 print("Best Score:", grid_search.best_score_)
 
-#* Setting hyperparameters manually
+# * Setting hyperparameters manually (not used)
 # hyper_params = {
 #     "max_depth": 15,
 #     "min_samples_leaf": 1,
@@ -88,7 +102,7 @@ print("Best Score:", grid_search.best_score_)
 #     "n_estimators": 100,
 # }
 
-#* Training the model with manually set hyperparameters
+# * Training the model with manually set hyperparameters (not used)
 # model = RandomForestRegressor(**hyper_params)
 # model.fit(X_train, y_train)
 
@@ -96,6 +110,7 @@ print("Best Score:", grid_search.best_score_)
 best_model = grid_search.best_estimator_
 best_model.fit(X_train, y_train)
 
+# Making predictions
 y_pred = best_model.predict(X_test)
 
 rmse = np.sqrt(mean_squared_error(y_test, y_pred))
@@ -103,6 +118,7 @@ r2 = r2_score(y_test, y_pred)
 print("Root Mean Squared Error (RMSE):", rmse)
 print("R2 Score:", r2)
 
+# Plotting the results
 figures = []  # List to store the figures
 
 # Scatter plot of actual vs predicted
@@ -116,7 +132,7 @@ plt.ylabel("Predicted")
 plt.show()
 figures.append((fig1, "Scatter_plot_actual_vs_predicted.png"))
 
-# Histogram of Residual
+# Histogram of Residuals
 fig2, ax2 = plt.subplots()
 residuals = y_test - y_pred
 plt.hist(residuals, bins=50)
@@ -126,7 +142,7 @@ plt.show()
 figures.append((fig2, "Histogram_Residual.png"))
 
 # Line plot of actual vs predicted over time
-fig3, ax2 = plt.subplots()
+fig3, ax3 = plt.subplots()
 plt.plot(y_test.values, label="Actual")
 plt.plot(y_pred, label="Predicted", color="green")
 plt.xlabel("Time")
